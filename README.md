@@ -2,9 +2,42 @@
 
 Firmware for an ESP8266-based LED matrix clock with RTC backup, Wi-Fi NTP sync, web configuration, MQTT message scrolling, and OTA updates.
 
-![LED Matrix Clock](https://ae01.alicdn.com/kf/S9f6b0f4c0b9942df9a0a3ebfb9c2f09fM.jpg)
+![LED Matrix Clock](https://ae-pic-a1.aliexpress-media.com/kf/S9dcd39a3ddfb446cbf7b53546c468ae9P.jpg_220x220q75.jpg_.avif)
 
 Reference hardware: [AliExpress 1088AW MAX7219 4-in-1 LED Matrix Module](https://www.aliexpress.com/item/1005009324894617.html)
+
+## ⚡ Quickstart
+
+1. **Clone this repo:**
+   ```bash
+   git clone https://github.com/co2au/esp8266-wifi-clock.git
+   cd esp8266-wifi-clock
+   ```
+
+2. **Open in Arduino IDE**  
+   - Open `wifi_clock_mqtt.ino`.
+
+3. **Install required libraries**  
+   (see [Libraries Used](#-libraries-used) below).
+
+4. **Select board in Arduino IDE:**  
+   - **Board:** Generic ESP8266 Module  
+   - **Flash Size:** 4MB (FS:1MB OTA:~1019KB)  
+   - **Crystal Freq:** 26 MHz  
+   - **Flash Mode:** DOUT  
+   - **CPU Freq:** 80 MHz  
+
+5. **Enter flash mode** on ESP8266:  
+   - Hold **DOWNLOAD**.  
+   - Tap **RESET** once.  
+   - Release **DOWNLOAD**.  
+
+6. **Upload via serial**.  
+   First boot creates fallback AP `MatrixClock-<chipid>` if Wi-Fi fails.
+
+7. Configure Wi-Fi, NTP, MQTT, etc. via the built-in Web UI.
+
+8. For future updates, use **OTA** (`/update` page or updater script).
 
 ---
 
@@ -92,8 +125,49 @@ From the sketch:
    - Flash Mode: **DOUT**
    - CPU Frequency: **80 MHz**
 4. Install the required libraries (see above).
-5. Upload the code via USB (CH340 adapter).
-6. On first boot, connect to Wi-Fi or access the AP fallback SSID `MatrixClock-<chipid>`.
+5. **Enter flash mode on the ESP8266 board:**
+   - Hold down the **DOWNLOAD** button.
+   - While holding, **press and release RESET** once.
+   - Release the **DOWNLOAD** button.
+6. Upload the code via USB (CH340 adapter).
+7. On first boot, connect to Wi-Fi or access the AP fallback SSID `MatrixClock-<chipid>`.
+
+---
+
+## 🔄 OTA Updates
+
+After the first serial flash, you can update firmware wirelessly:
+
+- **HTTP OTA (default)**  
+  Upload new firmware by visiting `http://<device-ip>/update` in a browser, or using the updater script (below).
+
+- **ArduinoOTA (optional)**  
+  Enable in the Web UI, then use Arduino IDE or PlatformIO OTA upload.
+
+---
+
+## 📜 Updater Script
+
+The repo includes a helper script [`updateclocks.bash`](updateclocks.bash) for pushing updates to one or more clocks over HTTP OTA.
+
+### Usage
+1. Build firmware via Arduino IDE or PlatformIO.  
+   The binary should be at:  
+   `build/esp8266.esp8266.generic/wifi_clock_mqtt.ino.bin`
+2. Run:
+   ```bash
+   ./updateclocks.bash
+   ```
+   This will POST the firmware to each clock’s `/update` endpoint.
+3. Add/edit device IPs in the script under `CLOCKS=(...)`.
+
+### Notes
+- Supports retries and optional HTTP OTA auth (`HOTA_USER`, `HOTA_PASS` env vars).
+- The clock reboots automatically after a successful update.
+- Example with password:
+  ```bash
+  HOTA_USER=admin HOTA_PASS=secret ./updateclocks.bash
+  ```
 
 ---
 
