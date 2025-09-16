@@ -1,0 +1,20 @@
+How to use with PlatformIO
+
+Place your sketch as src/main.cpp (or rename your existing .ino to main.cpp and include headers as needed).
+
+Build & flash over USB (first time):
+pio run -e esp8266-clock-serial
+pio run -e esp8266-clock-serial -t upload
+
+(Optional) Upload LittleFS data
+If you ever add data/ contents (e.g., seed /config.json), you can:
+pio run -e esp8266-clock-serial -t uploadfs
+
+Subsequent OTA updates (after first serial flash):
+
+Ensure the device is on Wi-Fi and ArduinoOTA is enabled in your config.
+Set upload_port in the ota environment to your clock’s IP.
+pio run -e esp8266-clock-ota -t upload
+
+If you set an ArduinoOTA password, add upload_flags = --auth=YOUR_OTA_PASSWORD.
+

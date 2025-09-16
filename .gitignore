@@ -1,0 +1,25 @@
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Editors and IDEs
+.vscode/
+.idea/
+
+# Build output
+*.bin
+*.elf
+*.hex
+*.map
+
+# PlatformIO
+.pio/
+.piolibdeps/
+
+# Arduino CLI cache
+.arduino15/
+.build/
+
+# Local secrets
+include/secrets.h
+

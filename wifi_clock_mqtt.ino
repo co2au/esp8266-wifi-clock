@@ -1,3 +1,34 @@
+/*
+ * ESP8266 Wi-Fi Matrix Clock
+ * --------------------------
+ * Firmware for an ESP8266-based LED matrix clock with RTC backup,
+ * Wi-Fi NTP sync, web configuration, MQTT message scrolling, and OTA updates.
+ *
+ * Hardware:
+ *   - ESP8266 (Generic ESP8266 Module, 4MB Flash, DOUT, 26MHz crystal, 80MHz CPU)
+ *   - MAX7219 1088AW 4-in-1 LED matrix module (Icstation layout)
+ *   - DS3231M RTC (I²C, addr 0x68)
+ *   - Mercury tilt switch (orientation auto-flip)
+ *
+ * Author: Craig O'Toole (https://github.com/co2au)
+ * Repository: https://github.com/co2au/esp8266-wifi-clock
+ *
+ * License: MIT (see LICENSE file for details)
+ *
+ * Arduino IDE settings:
+ *   - Board: Generic ESP8266 Module
+ *   - Flash Size: 4MB (FS:1MB, OTA:~1019KB)
+ *   - Flash Mode: DOUT
+ *   - Crystal Freq: 26MHz
+ *   - CPU Frequency: 80MHz
+ *
+ * Libraries required:
+ *   ESP8266WiFi, ESP8266WebServer, LittleFS, time, Wire, SPI,
+ *   MD_Parola, MD_MAX72XX, PubSubClient, ArduinoJson (v6),
+ *   ESP8266HTTPUpdateServer, ArduinoOTA
+ */
+
+
 // ESP8266 Matrix Clock (4x 1088AW/MAX7219, Icstation layout) + DS3231M (RTC in UTC)
 // Web UI + LittleFS config + MQTT + STA→AP fallback + OTA (HTTP / ArduinoOTA)
 // Blinkless clock, steady colon, centred after MQTT scroll, tilt default ACTIVE HIGH
