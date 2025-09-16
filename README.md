@@ -26,5 +26,5 @@ If using SPIFFS or LittleFS, put assets in `data/`, then:
 - `pio run -t uploadfs` (PlatformIO) or Arduino plugin for FS upload.
 
 ## Licensing
-MIT unless you prefer another licence.
+MIT
 
